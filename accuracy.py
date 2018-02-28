@@ -1,5 +1,6 @@
 
 #program to check the accuracy of the algorithm
+# just checks for % of correct predictions as the accracy
 
 def accuracy_metric(actual, predicted):
 	correct = 0
