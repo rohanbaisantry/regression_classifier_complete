@@ -5,7 +5,7 @@
 import pandas as pd
 import numpy as np
 
-#Loading the dataset
+#Loading the dataset as numpy arrays
 def load(train_str,test_str):
     training_data = np.array( pd.read_csv( train_str, sep = ",", header = None ))
     testing_data = np.array( pd.read_csv( test_str, sep = ",", header = None ))
