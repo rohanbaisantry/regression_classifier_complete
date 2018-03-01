@@ -3,6 +3,7 @@
 
 from numpy import std
 from numpy import mean
+from numpy import var
 
 # Find the min and max values for each column
 def dataset_minmax(dataset):
@@ -24,9 +25,9 @@ def Scaling_dataset(dataset, minmax):
 def dataset_stdmean(dataset):
     stdmean=list()
     for i in range(len(dataset[0])):
-        col_values=[row[i] for row in dataset]
-        value_var=var(col_values)
-        value_mean=mean(col_values)
+        col_values = [row[i] for row in dataset]
+        value_var = std(col_values)
+        value_mean = mean(col_values)
         stdmean.append([value_var, value_mean])
     return stdmean
 
@@ -34,24 +35,24 @@ def dataset_stdmean(dataset):
 def standardizing_dataset(dataset, stdmean):
     for row in dataset:
         for i in range(len(row)):
-            row[i] = (row[i] - minmax[i][1]) / float(minmax[i][0])
+            row[i] = (row[i] - stdmean[i][1]) / float(stdmean[i][0])
 
-# Scaling the datasets 
+# Scaling the datasets to a Range of [0, 1]
 def scaling(x_train,x_test):
     # Scaling the training data
-    minmax_train=dataset_minmax(x_train)
+    minmax_train = dataset_minmax(x_train)
     Scaling_dataset(x_train,minmax_train)
     # Scaling the testing data
-    minmax_test=dataset_minmax(x_test)
+    minmax_test = dataset_minmax(x_test)
     Scaling_dataset(x_test,minmax_test) 
-    return [x_train, y_train, x_test, y_test]
+    return [x_train, x_test]
 
-# standardizing the data
+# standardizing the data and hence making the Mean = 0 and Standard Deviation  = 1
 def standardizing(x_train,x_test):
     # Standardizing the training data
-    stdmean_train=dataset_stdmean(x_train)
-    Standardizing_dataset(x_train,stdmean_train)
+    stdmean_train = dataset_stdmean(x_train)
+    standardizing_dataset(x_train,stdmean_train)
     # Standardizing the testing data
-    stdmean_test=dataset_stdmean(x_test)
-    Standardizing_dataset(x_test,stdmean_test) 
-    return [x_train, y_train, x_test, y_test]
+    stdmean_test = dataset_stdmean(x_test)
+    standardizing_dataset(x_test,stdmean_test) 
+    return [x_train, x_test]
